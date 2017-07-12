@@ -34,10 +34,7 @@ public class UpdateWindowDNS
         pb.redirectErrorStream(true);
         Process process = pb.start();
         int w = process.waitFor();
-        if (w == 0)// 0代表正常退出
-        {
-        }
-        else
+        if (w != 0)
         {
             throw new RuntimeException("errorResult=" + w);
         }
