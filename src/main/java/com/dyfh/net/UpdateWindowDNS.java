@@ -15,13 +15,6 @@ public class UpdateWindowDNS
             "\\b((?!\\d\\d\\d)\\d+|1\\d\\d|2[0-4]\\d|25[0-5])\\.((?!\\d\\d\\d)\\d+|1\\d\\d|2[0-4]\\d|25[0-5])"
                     + "\\.((?!\\d\\d\\d)\\d+|1\\d\\d|2[0-4]\\d|25[0-5])\\.((?!\\d\\d\\d)\\d+|1\\d\\d|2[0-4]\\d|25[0-5])\\b");
 
-    public static void main(String[] args) throws Exception
-    {
-        String[] dnsArray = new String[] { "192.168.3.200", "8.8.8.8" };
-        setWindowDNS(dnsArray);
-        System.out.println(flushWindowDNS());
-    }
-
     public static void autoDNS() throws Exception
     {
         //完整命令行 netsh interface ip set dns name="本地连接" source=dhcp
