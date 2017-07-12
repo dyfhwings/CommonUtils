@@ -51,8 +51,7 @@ public class UpdateDNS
         List<String> cmd = new ArrayList<String>();
         cmd.add("cmd");
         cmd.add("/c");
-        cmd.add("ipconfig");
-        cmd.add("/flushdns");
+        cmd.add("ipconfig /flushdns");
 
         ProcessBuilder pb = new ProcessBuilder();
         pb.command(cmd);
