@@ -15,7 +15,7 @@ public class UpdateWindowDNS
             "\\b((?!\\d\\d\\d)\\d+|1\\d\\d|2[0-4]\\d|25[0-5])\\.((?!\\d\\d\\d)\\d+|1\\d\\d|2[0-4]\\d|25[0-5])"
                     + "\\.((?!\\d\\d\\d)\\d+|1\\d\\d|2[0-4]\\d|25[0-5])\\.((?!\\d\\d\\d)\\d+|1\\d\\d|2[0-4]\\d|25[0-5])\\b");
 
-    public static void autoDNS() throws Exception
+    public static void autoDNS(String networkName) throws Exception
     {
         //完整命令行 netsh interface ip set dns name="本地连接" source=dhcp
         List<String> cmd = new ArrayList<String>();
@@ -26,7 +26,7 @@ public class UpdateWindowDNS
         cmd.add("ip");
         cmd.add("set");
         cmd.add("dns");
-        cmd.add("name=\"本地连接\"");
+        cmd.add("name=\"" + networkName + "\"");
         cmd.add("source=dhcp");
 
         ProcessBuilder pb = new ProcessBuilder();
@@ -40,13 +40,13 @@ public class UpdateWindowDNS
         }
     }
 
-    public static void setWindowDNS(String[] dnsArray) throws Exception
+    public static void setWindowDNS(String[] dnsArray, String networkName) throws Exception
     {
         if (dnsArray == null || dnsArray.length == 0)
         {
             throw new RuntimeException("设置DNS异常，未指定新DNS地址。");
         }
-        autoDNS();
+        autoDNS(networkName);
         ProcessBuilder pb = new ProcessBuilder();
         List<String> cmd;
         for (int i = 0; i < dnsArray.length; i++)
@@ -56,11 +56,11 @@ public class UpdateWindowDNS
             {
                 if (i == 0)
                 {
-                    cmd = buildPrimaryDNSCmd(dnsArray[i]);
+                    cmd = buildPrimaryDNSCmd(dnsArray[i], networkName);
                 }
                 else
                 {
-                    cmd = buildAddDNSCmd(dnsArray[i], i + 1);
+                    cmd = buildAddDNSCmd(dnsArray[i], i + 1, networkName);
 
                 }
                 pb.command(cmd);
@@ -81,7 +81,7 @@ public class UpdateWindowDNS
 
     }
 
-    private static List<String> buildPrimaryDNSCmd(String dns) throws Exception
+    private static List<String> buildPrimaryDNSCmd(String dns, String networkName) throws Exception
     {
         //完整命令行 netsh interface ip set dns name="本地连接" source=static addr=192.168.5.200 register=primary
         List<String> cmd = new ArrayList<String>();
@@ -92,7 +92,7 @@ public class UpdateWindowDNS
         cmd.add("ip");
         cmd.add("set");
         cmd.add("dns");
-        cmd.add("name=\"本地连接\"");
+        cmd.add("name=\"" + networkName + "\"");
         cmd.add("source=static");
         cmd.add("addr=" + dns);
         cmd.add("register=primary");
@@ -100,7 +100,7 @@ public class UpdateWindowDNS
         return cmd;
     }
 
-    private static List<String> buildAddDNSCmd(String dns, int index) throws Exception
+    private static List<String> buildAddDNSCmd(String dns, int index, String networkName) throws Exception
     {
         //完整命令行 netsh interface ip set dns name="本地连接" source=static addr=192.168.5.200 register=primary
         List<String> cmd = new ArrayList<String>();
@@ -111,7 +111,7 @@ public class UpdateWindowDNS
         cmd.add("ip");
         cmd.add("add");
         cmd.add("dns");
-        cmd.add("name=\"本地连接\"");
+        cmd.add("name=\"" + networkName + "\"");
         cmd.add("addr=" + dns);
         cmd.add("index=" + index);
         return cmd;
