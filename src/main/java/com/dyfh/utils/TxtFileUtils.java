@@ -41,7 +41,7 @@ public class TxtFileUtils
      */
     public static String readTxtFile(File fileName) throws Exception
     {
-        String result = null;
+        String result = "";
         FileReader fileReader = null;
         BufferedReader bufferedReader = null;
         try
