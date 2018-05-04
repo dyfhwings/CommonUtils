@@ -139,7 +139,7 @@ public class CutImageUtils
                     new FileOutputStream(newFileName), 469, 770, 605, 58);
             System.out.println("截取完成。新文件名=" + newFileName);
         }
-        System.out.println("处理图片数量=" + paths.size() + ", 用时=" + (System.currentTimeMillis() - s));
+        System.out.println("处理图片数量=" + paths.size() + ", 用时=" + (System.currentTimeMillis() - s) + "ms");
     }
 
     private static class JpgPredicate implements Predicate<Path>
